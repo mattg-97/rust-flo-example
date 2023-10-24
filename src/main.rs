@@ -1,7 +1,7 @@
-use axum::routing::{get, post, put, Router};
+use axum::routing::{delete, get, post, put, Router};
 use sqlx::postgres::PgPoolOptions;
 use std::env;
-mod handlers;
+mod api;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -16,10 +16,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     let app = Router::new()
-        .route("/", get(handlers::health))
-        .route("/quotes", post(handlers::create_quote))
-        .route("/quotes", get(handlers::read_quotes))
-        .route("/quotes/:id", put(handlers::update_quote))
+        .route("/", get(api::handlers::health::health))
+        .route("/quotes", post(api::handlers::create::create_quote))
+        .route("/quotes", get(api::handlers::get::read_quotes))
+        .route("/quotes/:id", put(api::handlers::update::update_quote))
+        .route("/quotes/:id", delete(api::handlers::delete::delete_quote))
         .with_state(pool);
 
     axum::Server::bind(&addr.parse().unwrap())
