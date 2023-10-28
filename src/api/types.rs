@@ -59,6 +59,12 @@ impl User {
     }
 }
 
+#[derive(Serialize, sqlx::FromRow)]
+pub struct DropdownUser {
+    pub full_name: String,
+    pub user_id: i32,
+}
+
 #[derive(Debug, Deserialize)]
 pub struct CreateUserRequest {
     pub first_name: String,

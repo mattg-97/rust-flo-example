@@ -17,12 +17,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let app = Router::new()
         .route("/", get(api::handlers::health::health))
-        .route("/quotes", post(api::handlers::create::create_quote))
-        .route("/quotes", get(api::handlers::get::read_quotes))
-        .route("/quotes/:id", put(api::handlers::update::update_quote))
-        .route("/quotes/:id", delete(api::handlers::delete::delete_quote))
         .route("/user/add", post(api::handlers::users::add::create_user))
         .route("/user/get", get(api::handlers::users::get_all::get_users))
+        .route(
+            "/user/getdropdown",
+            get(api::handlers::users::get_all_dropdown::get_users_for_dropdown),
+        )
+        .route(
+            "/user/delete",
+            delete(api::handlers::users::delete::delete_user),
+        )
         .with_state(pool);
 
     axum::Server::bind(&addr.parse().unwrap())
