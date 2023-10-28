@@ -22,6 +22,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .route("/quotes/:id", put(api::handlers::update::update_quote))
         .route("/quotes/:id", delete(api::handlers::delete::delete_quote))
         .route("/user/add", post(api::handlers::users::add::create_user))
+        .route("/user/get", get(api::handlers::users::get_all::get_users))
         .with_state(pool);
 
     axum::Server::bind(&addr.parse().unwrap())
