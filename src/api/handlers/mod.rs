@@ -1,5 +1,9 @@
+pub mod contributions;
 pub mod create;
 pub mod delete;
 pub mod get;
 pub mod health;
+pub mod progress;
+pub mod projects;
 pub mod update;
+pub mod users;
